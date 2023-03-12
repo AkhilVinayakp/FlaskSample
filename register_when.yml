@@ -1,0 +1,13 @@
+- name: play to demonstrate when and register
+  hosts: localhost
+  tasks:
+    - name: Ping the host
+      ping:
+    - name: check the current directory
+      command: pwd
+      register: working_dir
+    - debug:
+        msg: "you are working on {{working_dir}}"
+    - name: creates the dir
+      command: mkdir test
+      when: working_dir is succeeded

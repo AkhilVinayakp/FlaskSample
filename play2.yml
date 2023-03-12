@@ -1,0 +1,11 @@
+# Playbook to ping and example of using variables inside 
+- name: Variables In playbook
+  hosts: localhost
+  vars:
+    - uname: "Ragupura"
+  tasks:
+    - name: ping the connection
+      ping:
+    - name: Print variable name
+      debug:
+        msg: "Hello {{uname}}"

@@ -1,0 +1,21 @@
+# file is used for demonstrating the looping functionality
+- name: Sample looping
+  hosts: localhost
+  tasks:
+    - name: Creating the file
+      command: touch {{item}}
+      with_item:
+        - ravi
+        - gopika
+        - malavika
+    - name: removing the files
+      command: rm -f {{item}}
+      loop:
+        - ravi
+        - gopika
+    - name: List the files
+      shell: 'ls'
+      register: folder_content
+    - name: List the dir
+      debug:
+        msg: "folder contents {{folder_content}}"

@@ -1,0 +1,29 @@
+pipeline {
+    agent { docker { image 'python:3-alpine3.15' } }
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+        stage('cmd-exe'){
+            steps{
+                script {
+                test_cmd = sh(
+                    script: "pwd",
+                    returnStdout: true
+                ).trim()
+                echo "cmd test ${test_cmd}"
+                }
+            }
+        }
+        stage("build using the docker"){
+            steps {
+                script {
+                    docker.build('pythonApi:v0.0.1', '--file /Dockerfile')
+                }
+            }
+        }
+    }
+}
