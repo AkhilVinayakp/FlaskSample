@@ -1,0 +1,31 @@
+// this is a sample file to build an image
+pipeline {
+    agent any
+    stages{
+        stage('getting the file downloaded from the git'){
+            steps{
+                git 'https://github.com/lvthillo/python-flask-docker.git'
+            }
+        }
+        stage('cmd-exe'){
+            steps{
+                script {
+                test_cmd = sh(
+                    script: "ls -l",
+                    returnStdout: true
+                ).trim()
+                echo "cmd test ${test_cmd}"
+                }
+            }
+        }
+        stage('buiding the image with docker file'){
+            agent{ dockerfile{
+                additionalBuildArgs  '--build-arg version=1.0.2'
+            }
+            }
+            steps{
+                sh 'ls -l'
+            }
+        }
+    }
+}
